@@ -6,11 +6,12 @@
 import os
 import pickle
 import sys
+
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from azureml.core import Workspace, Dataset
+from azureml.core import Dataset, Workspace
 from azureml.core.experiment import Experiment
 
 model_name = sys.argv[1]
@@ -103,7 +104,7 @@ if __name__=='__main__':
     test = test_ds.to_pandas_dataframe()
 
     eval_experiment = Experiment(ws, name="Evaluation")
-    run = eval_experiment.start_logging()
+    run = eval_experiment.start_logging(snapshot_directory=None)
     run.log("dataset name", test_ds.name)
     run.log("dataset version", test_ds.version)
 
